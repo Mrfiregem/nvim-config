@@ -1,0 +1,4 @@
+line_endings = 'Windows'
+indent_type = 'Spaces'
+call_parentheses = 'NoSingleTable'
+collapse_simple_statement = 'ConditionalOnly'
