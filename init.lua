@@ -36,7 +36,8 @@ vim.pack.add {
 }
 
 -- Load nvim-config-specific LSP configuration when editing config files
-require("lazydev").setup {}
+-- require("lazydev").setup {}
+util.pack.configure_pkg("lazydev.nvim", {})
 
 -- Enable LSP server configurations from `lspconfig`
 local lsp_servers = { "nushell", "lua_ls" }

@@ -52,7 +52,7 @@ M.pack.run_on_build = function(pkgname, cmd_or_func, on_change)
                 -- Load package if not loaded yet in case command requires it
                 if not event.data.active then vim.cmd.packadd(pkgname) end
                 -- Run given command
-                if call_type == "function" then
+                if call_type == "string" then
                     vim.cmd(cmd_or_func)
                 else
                     cmd_or_func()
@@ -60,6 +60,41 @@ M.pack.run_on_build = function(pkgname, cmd_or_func, on_change)
             end
         end,
     })
+end
+
+---@param name string
+---@return boolean
+local package_is_active = function(name)
+    local active_pkgs = vim.iter(vim.pack.get())
+        :filter(function(x)
+            return x.active
+        end)
+        :map(function(x)
+            return x.spec.name
+        end)
+        :totable()
+    return vim.list_contains(active_pkgs, name)
+end
+
+---@alias PkgConfig table | function
+
+---Run code only if a package with the given name is installed
+---Useful for providing package configuration.
+---
+---The config can be given as a function to run, or a table, which will then be passed as an argument to `require(import_name).setup(config)`.
+---@param name string Name of the package according to `vim.pack`
+---@param config PkgConfig The package configuration
+---@param import_name? string The name the package is called when `require`d
+M.pack.configure_pkg = function(name, config, import_name)
+    import_name = import_name or name:gsub(".nvim$", ""):gsub("^nvim-", "")
+    vim.validate("config", config, { "function", "table" })
+    if package_is_active(name) then
+        if type(config) == "function" then
+            config()
+        else
+            require(import_name).setup(config)
+        end
+    end
 end
 
 ---@alias Spec string | {name: string, ext: string}
@@ -81,7 +116,7 @@ end
 M.treesitter.enable = function(specs)
     vim.validate("specs", specs, "table", false, "Spec[]")
     vim.iter(specs)
-        :map(function(spec)
+        :map(function(spec) -- Convert strings to dict format
             vim.validate("spec", spec, spec_validator)
             if type(spec) == "string" then
                 return { name = spec, ext = spec }
@@ -89,7 +124,7 @@ M.treesitter.enable = function(specs)
                 return spec
             end
         end)
-        :each(function(spec)
+        :each(function(spec) -- Enable treesitter in buffer for language
             vim.api.nvim_create_autocmd("FileType", {
                 pattern = spec.ext,
                 callback = function(event)
