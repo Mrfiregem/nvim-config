@@ -90,7 +90,7 @@ end
 ---@param config PkgConfig The package configuration
 ---@param import_name? string The name the package is called when `require`d
 M.pack.configure_pkg = function(name, config, import_name)
-    import_name = import_name or name:gsub(".nvim$", ""):gsub("^nvim-", "")
+    import_name = import_name or name:gsub("%.nvim$", ""):gsub("^nvim-", "")
     vim.validate("config", config, { "function", "table" })
     if package_is_active(name) then
         if type(config) == "function" then
