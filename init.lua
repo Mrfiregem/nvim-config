@@ -24,7 +24,7 @@ for plugin in vim.iter(builtin_plugins) do
 end
 
 -- Add code that should be run when packages are installed, updated, or deleted
-util.pack.run_on_build("nvim-treesitter", "TSUpdate", { "install" }) -- Update treesitter parsers after updating package
+util.pack.run_on_build("nvim-treesitter", "TSUpdate") -- Update treesitter parsers after updating package
 
 -- Install & enable listed plugins from url
 vim.pack.add {
