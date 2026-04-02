@@ -19,7 +19,7 @@ end, { desc = "Update vim.pack plugins", bang = true, nargs = "*", complete = ut
 
 -- Enable builtin plugins
 local builtin_plugins = { "nohlsearch", "nvim.undotree" }
-for _, plugin in ipairs(builtin_plugins) do
+for plugin in vim.iter(builtin_plugins) do
     vim.cmd.packadd(plugin)
 end
 
