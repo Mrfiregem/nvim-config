@@ -46,17 +46,21 @@ M.pack.run_on_build = function(pkgname, cmd_or_func, on_change)
 
     vim.api.nvim_create_autocmd("PackChanged", {
         callback = function(event)
-            local name, kind = event.data.spec.name, event.data.kind
+            local name, kind, path = event.data.spec.name, event.data.kind, event.data.spec.path
             -- Make sure pkgname and desired package change match
-            if name == pkgname and vim.list_contains(on_change, kind) then
+            if name == pkgname and vim.list_contains(on_change, kind) and vim.fn.isdirectory(path) then
                 -- Load package if not loaded yet in case command requires it
                 if not event.data.active then vim.cmd.packadd(pkgname) end
+                -- Change directory to pkgdir
+                vim.cmd.cd(path)
                 -- Run given command
                 if call_type == "string" then
                     vim.cmd(cmd_or_func)
                 else
                     cmd_or_func()
                 end
+                -- Return to previous path
+                vim.cmd.cd("-")
             end
         end,
     })
