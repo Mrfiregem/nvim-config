@@ -1,13 +1,15 @@
-local M = {
-    pack = {},
-    treesitter = {},
-}
+---@alias PackEvent "install" | "update" | "delete"
+---@alias PkgConfig table | function
+---@alias OnPkgBuild string | function
+---@alias TSSpec string | {name: string, ext: string}
+
+local P, T = {}, {}
 
 ---Get list of packages not already present on commandline
 ---@param current string The current token being completed
 ---@param cmdline string The entire cmdline of the call
 ---@return string[] packages Matching package names
-M.pack.cmdline_completer = function(current, cmdline)
+P.cmdline_completer = function(current, cmdline)
     local input_args = vim.split(cmdline, "%s+", { trimempty = true })
 
     return vim.iter(vim.pack.get())
@@ -28,15 +30,13 @@ local on_change_validator = function(tbl)
         end)
 end
 
----@alias PackEvent "install" | "update" | "delete"
-
 ---Run a vim cmd string or lua function when a plugin is modified
 ---
 ---Wrapper around "PackChanged" autocmds to emulate lazy.nvim's `build` spec field.
 ---@param pkgname string The package name specified in vim.pack's `spec.name`
----@param cmd_or_func string | function Code to run when package status is changed
+---@param cmd_or_func OnPkgBuild Code to run when package status is changed
 ---@param on_change? PackEvent[] When to run. Any combination of {"install", "update", "delete"}. Default: {"install", "update"}
-M.pack.run_on_build = function(pkgname, cmd_or_func, on_change)
+P.run_on_build = function(pkgname, cmd_or_func, on_change)
     on_change = on_change or { "install", "update" }
     vim.validate("pkgname", pkgname, "string")
     vim.validate("cmd_or_func", cmd_or_func, { "string", "function" })
@@ -80,8 +80,6 @@ local package_is_active = function(name)
     return vim.list_contains(active_pkgs, name)
 end
 
----@alias PkgConfig table | function
-
 ---Run code only if a package with the given name is installed
 ---Useful for providing package configuration.
 ---
@@ -89,7 +87,7 @@ end
 ---@param name string Name of the package according to `vim.pack`
 ---@param config PkgConfig The package configuration
 ---@param import_name? string The name the package is called when `require`d
-M.pack.configure_pkg = function(name, config, import_name)
+P.configure_pkg = function(name, config, import_name)
     import_name = import_name or name:gsub("%.nvim$", ""):gsub("^nvim-", "")
     vim.validate("config", config, { "function", "table" })
     if package_is_active(name) then
@@ -101,24 +99,23 @@ M.pack.configure_pkg = function(name, config, import_name)
     end
 end
 
----@alias Spec string | {name: string, ext: string}
-
----@param spec Spec The name of a treesitter parser and the extension of the file
+---@param spec TSSpec The name of a treesitter parser and the extension of the file
 local spec_validator = function(spec)
     local spec_type = type(spec)
     if spec_type == "string" then
         return true
     elseif spec_type == "table" then
-        table.sort(spec)
-        return vim.deep_equal(spec, { "ext", "name" })
+        local keys = vim.tbl_keys(spec)
+        table.sort(keys)
+        return vim.deep_equal(keys, { "ext", "name" })
     end
     return false
 end
 
 ---Enable treesitter functionality for the given parsers
----@param specs Spec[] A list of treesitter parser specs to enable
-M.treesitter.enable = function(specs)
-    vim.validate("specs", specs, "table", false, "Spec[]")
+---@param specs TSSpec[] A list of treesitter parser specs to enable
+T.enable = function(specs)
+    vim.validate("specs", specs, "table", false, "TSSpec[]")
     vim.iter(specs)
         :map(function(spec) -- Convert strings to dict format
             vim.validate("spec", spec, spec_validator)
@@ -137,5 +134,10 @@ M.treesitter.enable = function(specs)
             })
         end)
 end
+
+local M = {
+    pack = P,
+    treesitter = T,
+}
 
 return M
