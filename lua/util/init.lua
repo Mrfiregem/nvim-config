@@ -52,7 +52,7 @@ M.pack.run_on_build = function(pkgname, cmd_or_func, on_change)
                 -- Load package if not loaded yet in case command requires it
                 if not event.data.active then vim.cmd.packadd(pkgname) end
                 -- Change directory to pkgdir
-                vim.cmd.cd(path)
+                local old_dir = vim.fn.chdir(path)
                 -- Run given command
                 if call_type == "string" then
                     vim.cmd(cmd_or_func)
@@ -60,7 +60,7 @@ M.pack.run_on_build = function(pkgname, cmd_or_func, on_change)
                     cmd_or_func()
                 end
                 -- Return to previous path
-                vim.cmd.cd("-")
+                if old_dir ~= "" then vim.fn.chdir(old_dir) end
             end
         end,
     })
