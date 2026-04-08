@@ -116,6 +116,7 @@ end
 ---@param specs TSSpec[] A list of treesitter parser specs to enable
 T.enable = function(specs)
     vim.validate("specs", specs, "table", false, "TSSpec[]")
+    local group = vim.api.nvim_create_augroup('util.ts.enable', {})
     vim.iter(specs)
         :map(function(spec) -- Convert strings to dict format
             vim.validate("spec", spec, spec_validator)
@@ -127,6 +128,7 @@ T.enable = function(specs)
         end)
         :each(function(spec) -- Enable treesitter in buffer for language
             vim.api.nvim_create_autocmd("FileType", {
+                group = group,
                 pattern = spec.ext,
                 callback = function(event)
                     vim.treesitter.start(event.buf, spec.lang)
