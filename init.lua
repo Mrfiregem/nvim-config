@@ -35,10 +35,16 @@ vim.pack.add {
     "https://github.com/nvim-telescope/telescope-fzf-native.nvim", -- telescope dependency
     { src = "https://github.com/nvim-telescope/telescope.nvim", version = vim.version.range("*") },
     "https://github.com/folke/lazydev.nvim",
+    { src = "https://github.com/ember-theme/nvim", name = "ember" },
 }
 
--- Load nvim-config-specific LSP configuration when editing config files
--- require("lazydev").setup {}
+-- Load colorscheme
+util.pack.configure_pkg("ember", function()
+    require("ember").setup { variant = "ember" }
+    vim.cmd.colorscheme("ember")
+end)
+
+-- Configure packages
 util.pack.configure_pkg("lazydev.nvim", {})
 
 -- Enable LSP server configurations from `lspconfig`
