@@ -25,15 +25,12 @@ end
 
 -- Add code that should be run when packages are installed, updated, or deleted
 util.pack.run_on_build("nvim-treesitter", "TSUpdate") -- Update treesitter parsers after updating package
-util.pack.run_on_build("telescope-fzf-native.nvim", "make") -- Build package
 
 -- Install & enable listed plugins from url
 vim.pack.add {
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/nvim-treesitter/nvim-treesitter",
-    "https://github.com/nvim-lua/plenary.nvim", -- telescope dependency
-    "https://github.com/nvim-telescope/telescope-fzf-native.nvim", -- telescope dependency
-    { src = "https://github.com/nvim-telescope/telescope.nvim", version = vim.version.range("*") },
+    "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/folke/lazydev.nvim",
     { src = "https://github.com/ember-theme/nvim", name = "ember" },
 }
@@ -45,6 +42,7 @@ util.pack.configure_pkg("ember", function()
 end)
 
 -- Configure packages
+util.pack.configure_pkg("fzf-lua", {})
 util.pack.configure_pkg("lazydev.nvim", {})
 
 -- Enable LSP server configurations from `lspconfig`
