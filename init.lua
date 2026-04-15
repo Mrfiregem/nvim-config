@@ -17,6 +17,17 @@ vim.api.nvim_create_user_command("PackUpdate", function(args)
     vim.pack.update(names, { force = args.bang })
 end, { desc = "Update vim.pack plugins", bang = true, nargs = "*", complete = util.pack.cmdline_completer })
 
+vim.api.nvim_create_user_command("PackPrune", function()
+    vim.pack.del(vim.iter(vim.pack.get())
+        :filter(function(x)
+            return not x.active
+        end)
+        :map(function(x)
+            return x.spec.name
+        end)
+        :totable())
+end, { desc = "Remove inactive (removed) vim.pack plugins" })
+
 -- Enable builtin plugins
 local builtin_plugins = { "nohlsearch", "nvim.undotree" }
 for plugin in vim.iter(builtin_plugins) do
