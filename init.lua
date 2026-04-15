@@ -34,27 +34,26 @@ for plugin in vim.iter(builtin_plugins) do
     vim.cmd.packadd(plugin)
 end
 
--- Add code that should be run when packages are installed, updated, or deleted
-util.pack.run_on_build("nvim-treesitter", "TSUpdate") -- Update treesitter parsers after updating package
-
 -- Install & enable listed plugins from url
-vim.pack.add {
-    "https://github.com/neovim/nvim-lspconfig",
+util.pack.use {
+    { src = "https://github.com/neovim/nvim-lspconfig", build = "TSUpdate" },
     "https://github.com/nvim-treesitter/nvim-treesitter",
-    "https://github.com/ibhagwan/fzf-lua",
-    "https://github.com/folke/lazydev.nvim",
-    { src = "https://github.com/ember-theme/nvim", name = "ember" },
+    { src = "https://github.com/ibhagwan/fzf-lua", opts = {} },
+    { src = "https://github.com/folke/lazydev.nvim", opts = {} },
+    {
+        src = "https://github.com/ember-theme/nvim",
+        name = "ember",
+        opts = { variant = "ember" },
+        config = function()
+            vim.cmd.colorscheme("ember")
+        end,
+    },
+    {
+        src = "https://github.com/stevearc/oil.nvim",
+        opts = {},
+        depends = { "https://github.com/nvim-tree/nvim-web-devicons" },
+    },
 }
-
--- Load colorscheme
-util.pack.configure_pkg("ember", function()
-    require("ember").setup { variant = "ember" }
-    vim.cmd.colorscheme("ember")
-end)
-
--- Configure packages
-util.pack.configure_pkg("fzf-lua", {})
-util.pack.configure_pkg("lazydev.nvim", {})
 
 -- Enable LSP server configurations from `lspconfig`
 local lsp_servers = { "nushell", "lua_ls" }
