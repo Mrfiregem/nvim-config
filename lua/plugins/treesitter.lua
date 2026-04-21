@@ -4,7 +4,7 @@ local ts_specs = { "lua", "nu" }
 ---@param specs string[] List of treesitter parser specs to enable
 local enable_specs = function(specs)
     vim.validate("specs", specs, "table")
-    local group = vim.api.nvim_create_augroup("util.ts.enable", {})
+    local group = vim.api.nvim_create_augroup("ts.enable", {})
 
     for spec in vim.iter(specs) do
         vim.validate("spec", spec, "string")
