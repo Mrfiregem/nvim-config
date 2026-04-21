@@ -8,7 +8,7 @@
   "mini.icons": { "branch": "main", "commit": "bac6317300e205335df425296570d84322730067" },
   "mini.snippets": { "branch": "main", "commit": "8e3acd41bd7ee8f89967c83bacc93871b98a14aa" },
   "mini.surround": { "branch": "main", "commit": "2715e04bea3ec9244f15b421dc5b18c0fe326210" },
-  "nvim-lspconfig": { "branch": "master", "commit": "e05fb8c3bd61d909dacff24f77f23beb644daf54" },
+  "nvim-lspconfig": { "branch": "master", "commit": "e146efacbafed3789ac568abcc5a981c5decaa58" },
   "nvim-treesitter": { "branch": "main", "commit": "4916d6592ede8c07973490d9322f187e07dfefac" },
   "oil.nvim": { "branch": "master", "commit": "0fcc83805ad11cf714a949c98c605ed717e0b83e" }
 }
