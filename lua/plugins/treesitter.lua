@@ -18,7 +18,7 @@ local enable_specs = function(specs)
             group = group,
             pattern = spec.ext,
             callback = function(ev)
-                require('nvim-treesitter').install(parser):wait(300000) -- 5 mins
+                require("nvim-treesitter").install(parser):wait(300000) -- 5 mins
                 vim.treesitter.start(ev.buf, spec.parser)
             end,
         })
