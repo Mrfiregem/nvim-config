@@ -13,6 +13,9 @@ local enable_specs = function(specs)
         local ext, parser = spec.ext or spec, spec.parser or spec
         vim.validate("ext", ext, "string")
         vim.validate("parser", parser, "string")
+
+        require('nvim-treesitter').install(parser):wait(300000) -- 5 mins
+
         vim.api.nvim_create_autocmd("FileType", {
             group = group,
             pattern = spec.ext,
