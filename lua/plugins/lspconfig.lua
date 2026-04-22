@@ -2,6 +2,7 @@ local lsp_servers = {
     "lua_ls",
     "nushell",
     "rust_analyzer",
+    "taplo",
 }
 
 return {
