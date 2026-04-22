@@ -9,6 +9,7 @@ return {
             function()
                 require("oil").toggle_float()
             end,
+            desc = "Toggle floating Oil file explorer",
         },
     },
 }
