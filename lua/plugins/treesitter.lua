@@ -16,10 +16,10 @@ local enable_specs = function(specs)
 
         vim.api.nvim_create_autocmd("FileType", {
             group = group,
-            pattern = spec.ext,
+            pattern = ext,
             callback = function(ev)
                 require("nvim-treesitter").install(parser):wait(300000) -- 5 mins
-                vim.treesitter.start(ev.buf, spec.parser)
+                vim.treesitter.start(ev.buf, parser)
             end,
         })
     end
