@@ -6,3 +6,7 @@ local builtin_plugins = { "nohlsearch", "nvim.undotree" }
 for plugin in vim.iter(builtin_plugins) do
     vim.cmd.packadd(plugin)
 end
+
+vim.keymap.set("n", "<leader>u", function()
+    require("undotree").open()
+end, { desc = "Toggle undotree" })
