@@ -1,7 +1,7 @@
 {
   "catppuccin": { "branch": "main", "commit": "426dbebe06b5c69fd846ceb17b42e12f890aedf1" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
-  "fzf-lua": { "branch": "main", "commit": "7b3a7390d01db93d422a4d6d6cf3771038577858" },
+  "fzf-lua": { "branch": "main", "commit": "8223eb24a7adf72c4b24e04b751486b492775414" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lazydev.nvim": { "branch": "main", "commit": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d" },
   "mini.completion": { "branch": "main", "commit": "667d94669be66043123cac44e7c5d65a31657732" },
