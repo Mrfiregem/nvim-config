@@ -49,14 +49,14 @@ return {
             desc = "Github Issues (all)",
         },
         {
-            "<leader>gi",
+            "<leader>gp",
             function()
                 Snacks.picker.gh_pr()
             end,
             desc = "Github Pull Requests (open)",
         },
         {
-            "<leader>gi",
+            "<leader>gP",
             function()
                 Snacks.picker.gh_pr { state = "all" }
             end,
