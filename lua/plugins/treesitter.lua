@@ -1,7 +1,10 @@
 ---@alias TSSpec string|{ext: string, parser: string}
 
 ---@type TSSpec[]
-local ts_specs = { "lua", "nu" }
+local ts_specs = {
+    "lua",
+    "nu",
+}
 
 ---Enable treesitter functionality for the listed parsers
 ---@param specs TSSpec[] List of treesitter parser specs to enable
