@@ -1,15 +1,22 @@
-local default_lsp_servers = {
-    "lua_ls", "rust_analyzer"
+local lsp_servers = {
+    "lua_ls",
+    "rust_analyzer",
 }
 
-local lspconfig =  {
-    'mason-org/mason-lspconfig.nvim',
+local formatters = {
+    "stylua",
+}
+
+vim.list_extend(lsp_servers, formatters)
+
+local lspconfig = {
+    "mason-org/mason-lspconfig.nvim",
     dependencies = {
         { "mason-org/mason.nvim", opts = {} },
         "neovim/nvim-lspconfig",
     },
     opts = {
-        ensure_installed = default_lsp_servers
+        ensure_installed = lsp_servers,
     },
 }
 
@@ -29,4 +36,3 @@ return {
     lspconfig,
     lazydev,
 }
-
