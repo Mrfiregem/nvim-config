@@ -1,3 +1,5 @@
+---@module "lazy"
+---@type LazyPluginSpec
 local oil = {
     "stevearc/oil.nvim",
     ---@module 'oil'
@@ -15,6 +17,7 @@ local oil = {
     },
 }
 
+---@type LazyPluginSpec
 local snipe = {
     "leath-dub/snipe.nvim",
     keys = {
@@ -29,6 +32,7 @@ local snipe = {
     opts = {},
 }
 
+---@type LazySpec
 return {
     oil,
     snipe,

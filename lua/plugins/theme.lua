@@ -1,3 +1,5 @@
+---@module "lazy"
+---@type LazyPluginSpec
 local ayu = {
     "shatur/neovim-ayu",
     priority = 1000,
@@ -6,6 +8,7 @@ local ayu = {
     end,
 }
 
+---@type LazyPluginSpec
 local lualine = {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -17,6 +20,7 @@ local lualine = {
     },
 }
 
+---@type LazySpec
 return {
     ayu,
     lualine,

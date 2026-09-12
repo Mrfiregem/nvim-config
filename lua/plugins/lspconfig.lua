@@ -1,14 +1,18 @@
+---@type string[]
 local lsp_servers = {
     "lua_ls",
     "rust_analyzer",
 }
 
+---@type string[]
 local formatters = {
     "stylua",
 }
 
 vim.list_extend(lsp_servers, formatters)
 
+---@module "lazy"
+---@type LazyPluginSpec
 local lspconfig = {
     "mason-org/mason-lspconfig.nvim",
     dependencies = {
@@ -20,18 +24,21 @@ local lspconfig = {
     },
 }
 
+---@type LazyPluginSpec
 local lazydev = {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
+    ---@module "lazydev"
+    ---@type lazydev.Config
     opts = {
         library = {
-            -- See the configuration section for more details
             -- Load luvit types when the `vim.uv` word is found
             { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         },
     },
 }
 
+---@type LazySpec
 return {
     lspconfig,
     lazydev,

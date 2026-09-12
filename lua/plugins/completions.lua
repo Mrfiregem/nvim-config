@@ -1,3 +1,5 @@
+---@module "lazy"
+---@type LazyPluginSpec
 return {
     "saghen/blink.cmp",
     version = "1.*",
