@@ -21,6 +21,8 @@ return {
             lua = { "stylua" },
             python = { "ruff" },
             javascript = { "prettierd", "prettier", "biome", stop_after_first = true },
+            typescript = { "prettierd", "prettier", "biome", stop_after_first = true },
+            ["_"] = { "trim_whitespace", "trim_newlines" },
         },
         default_format_opts = { lsp_format = "fallback" },
         format_on_save = { timeout_ms = 500 },

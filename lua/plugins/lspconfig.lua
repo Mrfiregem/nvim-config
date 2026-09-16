@@ -1,11 +1,13 @@
 ---@type string[]
 local lsp_servers = {
+    "emmet_language_server",
     "lua_ls",
     "rust_analyzer",
 }
 
 ---@type string[]
 local formatters = {
+    "ruff",
     "stylua",
 }
 
