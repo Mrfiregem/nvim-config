@@ -1,17 +1,14 @@
 ---@type string[]
-local lsp_servers = {
+local ensure_installed = {
+    -- LSP servers
     "emmet_language_server",
     "lua_ls",
     "rust_analyzer",
-}
-
----@type string[]
-local formatters = {
+    "nushell",
+    -- Formatters
     "ruff",
     "stylua",
 }
-
-vim.list_extend(lsp_servers, formatters)
 
 ---@module "lazy"
 ---@type LazyPluginSpec
@@ -21,8 +18,9 @@ local lspconfig = {
         { "mason-org/mason.nvim", opts = {} },
         "neovim/nvim-lspconfig",
     },
+    ---@type MasonSettings
     opts = {
-        ensure_installed = lsp_servers,
+        ensure_installed = ensure_installed,
     },
 }
 
